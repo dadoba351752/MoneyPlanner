@@ -1,14 +1,109 @@
-﻿<Page x:Class="MoneyPlanner.View.Calculators.CompoundInterestCalculatorPage"
+﻿<UserControl x:Class="MoneyPlanner.CompoundInterestCalculatorPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:MoneyPlanner.View.Calculators"
+      xmlns:local="clr-namespace:MoneyPlanner"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="800"
-      Title="CompoundInterestCalculatorPage">
+      d:DesignHeight="800" d:DesignWidth="800">
 
-    <Grid>
-        <Label>Ahoj</Label>
-    </Grid>
-</Page>
+	<UserControl.Resources>
+		<Style TargetType="TextBox">
+            <Setter Property="IsEnabled" Value="True"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Right"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="10"></Setter>
+        </Style>
+		<Style TargetType="ComboBox">
+            <Setter Property="IsEnabled" Value="True"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Right"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="10"></Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        </Style>
+	</UserControl.Resources>
+	<ScrollViewer HorizontalScrollBarVisibility="Hidden">
+		<Grid Margin="20, 20, 0, 0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="auto"/>
+			</Grid.RowDefinitions>
+
+			<Grid Grid.Row="0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="500"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Label Grid.Row="0" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center">Výpočet složeného úročení</Label>
+			</Grid>
+			
+			<Grid Grid.Row="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="50"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="300"/>
+					<ColumnDefinition Width="200"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+			
+				<Label Grid.Row="0" Grid.Column="0">Počáteční vklad (kč):</Label>
+				<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding InitialDeposit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+			
+				<Label Grid.Row="1" Grid.Column="0">Pravidelný vklad (kč):</Label>
+				<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RegularDeposit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+		
+				<Label Grid.Row="2" Grid.Column="0">Pravidelnost vkladu:</Label>
+				<ComboBox Grid.Row="2" Grid.Column="1" SelectedValuePath="Content" SelectedValue="{Binding DepositFrequency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+					<ComboBoxItem Content="Roční"></ComboBoxItem>
+					<ComboBoxItem Content="Půlroční"></ComboBoxItem>
+					<ComboBoxItem Content="Čtvrtletní"></ComboBoxItem>
+					<ComboBoxItem Content="Měsíční"></ComboBoxItem>
+					<ComboBoxItem Content="Týdenní"></ComboBoxItem>
+				</ComboBox>
+			
+				<Label Grid.Row="3" Grid.Column="0">Roční úroková sazba (%):</Label>
+				<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding AnnualInterestRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+				<Label Grid.Row="4" Grid.Column="0">Doba investování v letech:</Label>
+				<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding TermYears, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+				<Button Grid.Row="5" Grid.Column="1" Margin="10" Click="CalculateButton_Click">Vypočítat</Button>
+			</Grid>
+
+			<Grid Grid.Row="2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="50"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="300"/>
+					<ColumnDefinition Width="200"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+			
+				<Label Grid.Row="0" Grid.Column="0" FontWeight="Bold">Částka celkem (kč):</Label>
+				<TextBox Grid.Row="0" Grid.Column="1" IsEnabled="false" Text="{Binding TotalAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+			
+				<Label Grid.Row="1" Grid.Column="0">Z toho vlastní zdroje (kč):</Label>
+				<TextBox Grid.Row="1" Grid.Column="1" IsEnabled="false" Text="{Binding PrincipalAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+				<Label Grid.Row="2" Grid.Column="0">Z toho úroky (kč):</Label>
+				<TextBox Grid.Row="2" Grid.Column="1" IsEnabled="false" Text="{Binding InterestAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+			</Grid>
+		</Grid>
+	</ScrollViewer>	
+</UserControl>

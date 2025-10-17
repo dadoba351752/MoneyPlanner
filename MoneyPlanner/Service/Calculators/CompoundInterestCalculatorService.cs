@@ -6,7 +6,36 @@ using System.Threading.Tasks;
 
 namespace MoneyPlanner.Service.Calculators
 {
-    internal class CompoundInterestCalculatorService
+    public class CompoundInterestCalculatorService
     {
+        public decimal TotalAmount { get; set; }
+        public decimal PrincipalAmount { get; set; }
+        public decimal InterestAmount { get; set; }
+
+        public CompoundInterestCalculatorService
+            (
+                decimal initialDeposit,
+                decimal regularDeposit,
+                decimal depositFrequency,
+                decimal annualInterestRate,
+                decimal termYears
+            )
+        {
+            //Vzorec pro výpočet složeného úročení s validací na nulovou úrokovou sazbu
+            decimal x = (1 + ((annualInterestRate / 100) / depositFrequency));
+            decimal y = (depositFrequency * termYears);
+
+            decimal helper = (decimal)Math.Pow((double)x, (double)y);
+            decimal totalAmountWithoutInterest = initialDeposit + (regularDeposit * (depositFrequency * termYears));
+            if (annualInterestRate != 0)
+            {
+                TotalAmount = (initialDeposit * helper) + (regularDeposit * ((helper - 1) / ((annualInterestRate / 100) / depositFrequency)));
+            } else
+            {
+                TotalAmount = totalAmountWithoutInterest;
+            }
+            PrincipalAmount = totalAmountWithoutInterest;
+            InterestAmount = TotalAmount - totalAmountWithoutInterest;
+        }
     }
 }

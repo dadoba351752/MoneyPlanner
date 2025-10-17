@@ -89,7 +89,8 @@ namespace MoneyPlanner.ViewModel.Calculators
             }
         }
         public decimal EmployeeHealthInsurance
-        { get { return _employeeHealthInsurance; }
+        { 
+            get { return _employeeHealthInsurance; }
             set
             {
                 _employeeHealthInsurance = value;
