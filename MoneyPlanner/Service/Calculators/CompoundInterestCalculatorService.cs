@@ -21,7 +21,7 @@ namespace MoneyPlanner.Service.Calculators
                 decimal termYears
             )
         {
-            //Vzorec pro výpočet složeného úročení s validací na nulovou úrokovou sazbu
+            //Výpočet složeného úročení
             decimal x = (1 + ((annualInterestRate / 100) / depositFrequency));
             decimal y = (depositFrequency * termYears);
 
@@ -32,6 +32,7 @@ namespace MoneyPlanner.Service.Calculators
                 TotalAmount = (initialDeposit * helper) + (regularDeposit * ((helper - 1) / ((annualInterestRate / 100) / depositFrequency)));
             } else
             {
+                //Pokud je úroková sazba nulová
                 TotalAmount = totalAmountWithoutInterest;
             }
             PrincipalAmount = totalAmountWithoutInterest;

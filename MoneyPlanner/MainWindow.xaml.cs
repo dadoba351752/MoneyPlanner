@@ -1,39 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MoneyPlanner.Service.Database;
 using System.Windows;
+using MoneyPlanner.View.Portfolio;
+using MoneyPlanner.Service.Navigation;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MoneyPlanner
 {
     public partial class MainWindow : Window
     {
+        private NavigationService _navigationService = new NavigationService();
         public MainWindow()
         {
             InitializeComponent();
+            DatabaseHelper.InitializeDatabase();
+            _navigationService.NavigateRequested += OnNavigateRequested;
         }
-        NetIncomeCalculatorPage netIncomeCalculatorPage = new NetIncomeCalculatorPage ();
-        CompoundInterestCalculatorPage compoundInterestCalculatorPage = new CompoundInterestCalculatorPage();
-        private void NetIncomeCalculatorMenuButton_Click(object sender, RoutedEventArgs e)
+        void OnNavigateRequested(UserControl userControl)
         {
-            MainContent.Content = netIncomeCalculatorPage;
+            MainContent.Content = userControl;
         }
 
+        private void NetIncomeCalculatorMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            _navigationService.NavigateTo(new NetIncomeCalculatorPage());
+        }
         private void CompoundInterestCalculatorMenuButton_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = compoundInterestCalculatorPage;
+            _navigationService.NavigateTo(new CompoundInterestCalculatorPage());
         }
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
+            //Prozatím to nikam nevede, je nastaveno NavigateTo(null), protože nemám vytvořenou "startovací" UserControl
+            _navigationService.NavigateTo(null);
+        }
+        private void PortfolioMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            _navigationService.NavigateTo(new PortfolioWelcomePage(_navigationService));
         }
     }
 }

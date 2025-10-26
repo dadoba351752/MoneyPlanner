@@ -18,7 +18,7 @@
                 <MenuItem x:Name="MortgageCalculatorMenuButton" Header="Hypotéka"/>
                 <MenuItem x:Name="CompoundInterestCalculatorMenuButton" Header="Složené úročení" Click="CompoundInterestCalculatorMenuButton_Click"/>
             </MenuItem>
-            <MenuItem Header="Portfolio">
+            <MenuItem x:Name="PortfolioMenuButton" Header="Portfolio" Click="PortfolioMenuButton_Click">
             </MenuItem>
         </Menu>
         <ContentControl x:Name="MainContent" Grid.Row="1"/>
