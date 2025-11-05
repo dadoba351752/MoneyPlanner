@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using MoneyPlanner.Service.Navigation;
 using MoneyPlanner.ViewModel.Portfolio;
 using MoneyPlanner.Service.DTO;
+using MoneyPlanner.Service.Api;
 
 namespace MoneyPlanner.View.Portfolio
 {
@@ -18,6 +19,21 @@ namespace MoneyPlanner.View.Portfolio
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
             _navigationService.NavigateTo(new PortfolioWelcomePage(_navigationService));
+        }
+
+        private void AddInvestmentButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ShowTransactionsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void ManageInvestmentsButton_Click(object sender, RoutedEventArgs e)
+        {
+            await AlphaVantageClient.SymbolSearch("TSLA");
         }
     }
 }
