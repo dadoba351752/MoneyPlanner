@@ -4,16 +4,19 @@ using System.Windows;
 using System.Windows.Controls;
 using MoneyPlanner.Service.Navigation;
 using MoneyPlanner.Service.DTO;
+using MoneyPlanner.View.Helpers;
 
 namespace MoneyPlanner.View.Portfolio
 {
     public partial class PortfolioWelcomePage : UserControl
     {
         private NavigationService _navigationService;
+        private MessageService _messageService;
         public PortfolioWelcomePage(NavigationService navigationService)
         {
             InitializeComponent();
             _navigationService = navigationService;
+            _messageService = new MessageService();
             DataContext = new PortfolioWelcomeViewModel();
         }
 
@@ -32,6 +35,7 @@ namespace MoneyPlanner.View.Portfolio
             {
                 repository.AddUser(name, surname, birthNumber);
             }
+            else _messageService.ShowError("Nebyly zadány některé hodnoty.");
         }
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
@@ -41,9 +45,13 @@ namespace MoneyPlanner.View.Portfolio
             if (birthNumber != null)
             {
                 user = repository.FindUserByBirthNumber(birthNumber);
-                vm.UserFoundButtonText = user.Name + " " + user.Surname;
-                vm.UserFoundButtonIsEnabled = true;
-                vm.ClearCreateSearchBoxes();
+                if (user != null)
+                {
+                    vm.UserFoundButtonText = user.Name + " " + user.Surname;
+                    vm.UserFoundButtonIsEnabled = true;
+                    vm.ClearCreateSearchBoxes();
+                }
+                else _messageService.ShowError("Uživatel nebyl nalezen, zkus to prosím znovu.");
             }
         }
 

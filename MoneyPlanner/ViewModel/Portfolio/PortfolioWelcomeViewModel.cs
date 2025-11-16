@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using MoneyPlanner.View.Helpers;
+using System.ComponentModel;
 
 namespace MoneyPlanner.ViewModel.Portfolio
 {

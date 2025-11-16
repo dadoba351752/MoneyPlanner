@@ -1,27 +1,31 @@
 ﻿using Microsoft.Data.Sqlite;
+using System;
+using System.CodeDom;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace MoneyPlanner.Service.Database
 {
     internal class DatabaseHelper
     {
-        public static string DatabasePath = @"C:\Users\adams\source\repos\MoneyPlanner\MoneyPlanner\Files\MoneyPlanner.db";
-        private static string ConnectionString = $"Data Source={DatabasePath}";
+        public static string BaseDir = AppContext.BaseDirectory;
+        public static string ProjectDir = Directory.GetParent(BaseDir).Parent.Parent.Parent.FullName;
+        public static string DatabasePath = Path.Combine(ProjectDir, "Files", "MoneyPlanner.db");
 
+        private static string ConnectionString = $"Data Source={DatabasePath};Foreign Keys=True";
         public static void InitializeDatabase()
         {
-            string fullPath = DatabasePath;
-            if (!File.Exists(fullPath))
-            {
-                using (var tempConnection = new SqliteConnection($"Data Source={fullPath}"))
-                {
-                    tempConnection.Open();
-                }
-            }
-            using (var connection = new SqliteConnection(ConnectionString))
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {
                 connection.Open();
 
+                Directory.CreateDirectory(Path.GetDirectoryName(DatabasePath));
+                CreateUsersTable(connection);
+                CreateTransactionsTable(connection);
+            }
+        }
+        public static void CreateUsersTable(SqliteConnection connection)
+        {
                 string sql =
                 @"
                     CREATE TABLE IF NOT EXISTS Uzivatele (
@@ -31,15 +35,42 @@ namespace MoneyPlanner.Service.Database
                         BirthNumber TEXT NOT NULL UNIQUE
                     );
                 ";
-
                 using (var command = new SqliteCommand(sql, connection))
                 {
                     command.CommandText = sql;
                     command.ExecuteNonQuery();
                 }
+        }
+        public static void CreateTransactionsTable(SqliteConnection connection)
+        {
+            string sql =
+                @"
+                    CREATE TABLE IF NOT EXISTS Transactions (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Name TEXT NOT NULL,
+                    Symbol TEXT,
+                    Price INTEGER NOT NULL, -- stored in cents
+                    Amount INTEGER NOT NULL,
+                    Volume INTEGER NOT NULL, -- stored in cents
+                    Date TEXT NOT NULL, -- 'YYYY-MM-DD'
+                    UserId INTEGER NOT NULL,
+                    FOREIGN KEY (UserId) REFERENCES Uzivatele(Id) ON DELETE RESTRICT
+                    );
+                ";
+            using (var command = new SqliteCommand(sql, connection))
+            {
+                command.CommandText = sql;
+                command.ExecuteNonQuery();
             }
         }
+        public static void CreateSettingsTable(SqliteConnection connection)
+        {
 
+        }
+        public static void CreateCurrencyTable(SqliteConnection connection)
+        {
+
+        }
         public static SqliteConnection GetConnection()
         {
             var connection = new SqliteConnection(ConnectionString);

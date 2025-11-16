@@ -10,9 +10,11 @@ namespace MoneyPlanner.View.Portfolio
     public partial class PortfolioUserPage : UserControl
     {
         private NavigationService _navigationService;
+        private UserDTO _user;
         public PortfolioUserPage(NavigationService navigationService, UserDTO user)
         {
             InitializeComponent();
+            _user = user;
             _navigationService = navigationService;
             DataContext = new PortfolioUserViewModel(user);
         }
@@ -23,17 +25,16 @@ namespace MoneyPlanner.View.Portfolio
 
         private void AddInvestmentButton_Click(object sender, RoutedEventArgs e)
         {
-
+            _navigationService.NavigateTo(new PortfolioAddTransactionPage(_navigationService, _user));
         }
 
         private void ShowTransactionsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            _navigationService.NavigateTo(new PortfolioUserTransactionsPage(_navigationService, _user));
         }
 
-        private async void ManageInvestmentsButton_Click(object sender, RoutedEventArgs e)
+        private void ManageInvestmentsButton_Click(object sender, RoutedEventArgs e)
         {
-            await AlphaVantageClient.SymbolSearch("TSLA");
         }
     }
 }

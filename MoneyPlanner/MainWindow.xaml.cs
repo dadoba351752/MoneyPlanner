@@ -3,6 +3,7 @@ using System.Windows;
 using MoneyPlanner.View.Portfolio;
 using MoneyPlanner.Service.Navigation;
 using System.Windows.Controls;
+using MoneyPlanner.View.Helpers;
 
 namespace MoneyPlanner
 {
