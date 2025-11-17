@@ -55,12 +55,14 @@ namespace MoneyPlanner.Service.Database
 
                 while (reader.Read())
                 {
-                    var inv = new InvestmentSumDTO();
-                    inv.Name = reader.GetString(0);
-                    inv.Symbol = reader.GetString(1);
-                    inv.Amount = Convert.ToDecimal(reader.GetString(2));
-                    inv.AverageBuyPrice = Convert.ToDecimal(reader.GetString(3));
-                    inv.UserId = userId;
+                    var inv = new InvestmentSumDTO
+                    {
+                        Name = reader.GetString(0),
+                        Symbol = reader.GetString(1),
+                        Amount = Convert.ToDecimal(reader.GetString(2)),
+                        AverageBuyPrice = Convert.ToDecimal(reader.GetString(3)),
+                        UserId = userId
+                    };
                     InvestmentSum.Add(inv);
                 }
                 return InvestmentSum;
@@ -79,14 +81,17 @@ namespace MoneyPlanner.Service.Database
 
                 while (reader.Read())
                 {
-                    TransactionDTO tr = new TransactionDTO();
-                    tr.Id = int.Parse(reader.GetString(0));
-                    tr.Name = reader.GetString(1);
-                    tr.Symbol = reader.GetString(3);
-                    tr.Price = int.Parse(reader.GetString(4));
-                    tr.Amount = int.Parse(reader.GetString(5));
-                    tr.Volume = int.Parse(reader.GetString(6));
-                    tr.Date = reader.GetString(7);
+                    TransactionDTO tr = new TransactionDTO
+                    {
+                        Id = int.Parse(reader.GetString(0)),
+                        Name = reader.GetString(1),
+                        Symbol = reader.GetString(2),
+                        Price = int.Parse(reader.GetString(3)),
+                        Amount = int.Parse(reader.GetString(4)),
+                        Volume = int.Parse(reader.GetString(5)),
+                        Date = reader.GetString(6),
+                        UserId = int.Parse(reader.GetString(7))
+                    };
                     transactions.Add(tr);
                 }
                 return transactions;

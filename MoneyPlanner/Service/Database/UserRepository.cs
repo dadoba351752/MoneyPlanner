@@ -7,8 +7,8 @@ namespace MoneyPlanner.Service.Database
 {
     public class UserRepository
     {
-        UserDTO user = new UserDTO();
-        public MessageService messageService = new MessageService();
+        private static readonly UserDTO user = new UserDTO();
+        private static readonly MessageService messageService = new MessageService();
         public void AddUser(string name, string surname, string birthNumber)
         {
             //Spojení s databází

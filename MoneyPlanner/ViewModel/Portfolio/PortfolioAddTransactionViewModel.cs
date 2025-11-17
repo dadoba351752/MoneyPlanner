@@ -22,6 +22,11 @@ namespace MoneyPlanner.ViewModel.Portfolio
         {
             _user = user;
             NameTextBlock = _user.Name + " " + _user.Surname + " ID: " + _user.Id;
+            int CurrentYear = DateTime.Now.Year;
+            int CurrentMonth = DateTime.Now.Month;
+            int CurrentDay = DateTime.Now.Day;
+            
+            InvestmentDateTextBox = new DateTime(CurrentYear, CurrentMonth, CurrentDay);
         }
 
         public string _nameTextBlock;

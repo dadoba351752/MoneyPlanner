@@ -12,15 +12,16 @@ namespace MoneyPlanner.View.Portfolio
     {
         private NavigationService _navigationService;
         private UserDTO _user;
-        private TransactionRepository transactionRepository = new TransactionRepository();
+        private static readonly TransactionRepository transactionRepository = new TransactionRepository();
         public PortfolioUserTransactionsPage(NavigationService navigationService, UserDTO user)
         {
             InitializeComponent();
             _navigationService = navigationService;
             _user = user;
-            DataContext = new PortfolioUserTransactionsViewModel();
-            var vm = (PortfolioUserTransactionsPage)this.DataContext;
+            var vm = new PortfolioUserTransactionsViewModel();
+            DataContext = vm;
             var transactions = transactionRepository.GetTransactions(_user);
+            vm.TransactionsDataGrid = transactions;
             
         }
         private void GoBackButton_Click(object sender, RoutedEventArgs e)

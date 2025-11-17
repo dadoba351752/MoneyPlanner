@@ -41,7 +41,7 @@
         <TextBox Grid.Row="6" Grid.Column="0" Width="150"  Text="{Binding InvestmentVolumeTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
         <TextBlock Grid.Row="7" Grid.Column="0" Text="Datum:" HorizontalAlignment="Left"></TextBlock>
-        <DatePicker Grid.Row="7" Grid.Column="0" Width="150"  Text="{Binding InvestmentDateTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+        <DatePicker Grid.Row="7" Grid.Column="0" Language="cs-CZ" Width="150" Text="{Binding InvestmentDateTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
 
         <Button Grid.Row="8" Grid.Column="0" Background="LightGreen" Width="100" HorizontalAlignment="Center" Content="Přidat investici" Click="ConfirmInvestmentButton_Click"></Button>
     </Grid>

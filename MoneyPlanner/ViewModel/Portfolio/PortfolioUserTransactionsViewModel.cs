@@ -13,6 +13,7 @@ namespace MoneyPlanner.ViewModel.Portfolio
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         public ObservableCollection<TransactionDTO> _transactionsDataGrid;
         public ObservableCollection<TransactionDTO> TransactionsDataGrid
         {
@@ -22,10 +23,6 @@ namespace MoneyPlanner.ViewModel.Portfolio
                 _transactionsDataGrid = value;
                 OnPropertyChanged(nameof(TransactionsDataGrid));
             }
-        }
-        public void SetDataGrid(ObservableCollection<TransactionDTO> transactions)
-        {
-            TransactionsDataGrid = transactions;
         }
     }
 }

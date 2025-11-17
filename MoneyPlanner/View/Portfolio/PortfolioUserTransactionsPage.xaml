@@ -6,8 +6,33 @@
              xmlns:local="clr-namespace:MoneyPlanner.View.Portfolio"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Padding" Value="5,5,5,5"></Setter>
+            <Setter Property="IsReadOnly" Value="True"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="VerticalAlignment" Value="Top"></Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <DataGrid ItemsSource="{Binding TransactionsDataGrid}" AutoGenerateColumns="True"/>
-        <Button Content="Zpět" Width="50" Height="20" Click="GoBackButton_Click"></Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" ItemsSource="{Binding TransactionsDataGrid}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Název" Binding="{Binding Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Cena za kus" Binding="{Binding Price}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Množství" Binding="{Binding Amount}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Objem" Binding="{Binding Volume}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Datum" Binding="{Binding Date}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <Button Grid.Row="1" Content="Zpět" Width="50" Height="20" Margin="10" HorizontalAlignment="Left" Click="GoBackButton_Click"></Button>
     </Grid>
 </UserControl>
