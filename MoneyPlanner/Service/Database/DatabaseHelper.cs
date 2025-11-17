@@ -22,6 +22,7 @@ namespace MoneyPlanner.Service.Database
                 Directory.CreateDirectory(Path.GetDirectoryName(DatabasePath));
                 CreateUsersTable(connection);
                 CreateTransactionsTable(connection);
+                CreateSettingsTable(connection);
             }
         }
         public static void CreateUsersTable(SqliteConnection connection)
@@ -65,11 +66,17 @@ namespace MoneyPlanner.Service.Database
         }
         public static void CreateSettingsTable(SqliteConnection connection)
         {
-
-        }
-        public static void CreateCurrencyTable(SqliteConnection connection)
-        {
-
+            string sql =
+                @"
+                    CREATE TABLE IF NOT EXISTS Settings (
+                    Name TEXT NOT NULL,
+                    Value TEXT NOT NULL);
+                ";
+            using (var command = new SqliteCommand(sql, connection))
+            {
+                command.CommandText = sql;
+                command.ExecuteNonQuery();
+            }
         }
         public static SqliteConnection GetConnection()
         {

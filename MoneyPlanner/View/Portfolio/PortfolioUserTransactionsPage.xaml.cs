@@ -5,7 +5,6 @@ using MoneyPlanner.ViewModel.Portfolio;
 using System.Windows;
 using System.Windows.Controls;
 
-
 namespace MoneyPlanner.View.Portfolio
 {
     public partial class PortfolioUserTransactionsPage : UserControl

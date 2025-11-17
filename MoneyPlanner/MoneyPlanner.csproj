@@ -147,12 +147,18 @@
     <Compile Include="Service\DTO\InvestmentSumDTO.cs" />
     <Compile Include="Service\DTO\TransactionDTO.cs" />
     <Compile Include="Service\DTO\UserDTO.cs" />
+    <Compile Include="Service\Enum\CurrenciesEnum.cs" />
     <Compile Include="Service\Navigation\NavigationService.cs" />
+    <Compile Include="Service\Settings\CurrencySettings.cs" />
     <Compile Include="ViewModel\Portfolio\PortfolioAddTransactionViewModel.cs" />
+    <Compile Include="ViewModel\Portfolio\PortfolioSettingsViewModel.cs" />
     <Compile Include="ViewModel\Portfolio\PortfolioUserTransactionsViewModel.cs" />
     <Compile Include="ViewModel\Portfolio\PortfolioUserViewModel.cs" />
     <Compile Include="ViewModel\Portfolio\PortfolioWelcomeViewModel.cs" />
     <Compile Include="Service\Interfaces\IMessageService.cs" />
+    <Compile Include="View\Portfolio\PortfolioSettingsPage.xaml.cs">
+      <DependentUpon>PortfolioSettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Portfolio\PortfolioUserTransactionsPage.xaml.cs">
       <DependentUpon>PortfolioUserTransactionsPage.xaml</DependentUpon>
     </Compile>
@@ -188,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Portfolio\PortfolioAddTransactionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Portfolio\PortfolioSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

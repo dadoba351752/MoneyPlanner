@@ -32,9 +32,9 @@ namespace MoneyPlanner.View.Portfolio
         {
             _navigationService.NavigateTo(new PortfolioUserTransactionsPage(_navigationService, _user));
         }
-
-        private void ManageInvestmentsButton_Click(object sender, RoutedEventArgs e)
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
+            _navigationService.NavigateTo(new PortfolioSettingsPage(_navigationService, _user));
         }
     }
 }

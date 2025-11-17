@@ -26,7 +26,7 @@
             </Grid.RowDefinitions>
             <Button HorizontalAlignment="Left" Grid.Row="0" Click="AddInvestmentButton_Click" Width="100" Height="20" Margin="5">Přidat investici</Button>
             <Button HorizontalAlignment="Left" Grid.Row="1" Click="ShowTransactionsButton_Click" Width="100" Height="20"  Margin="5">Zobrazit transakce</Button>
-            <Button HorizontalAlignment="Left" Grid.Row="2" Click="ManageInvestmentsButton_Click" Width="100" Height="20"  Margin="5">Spravovat</Button>
+            <Button HorizontalAlignment="Left" Grid.Row="2" Click="SettingsButton_Click" Width="100" Height="20"  Margin="5">Spravovat</Button>
             <Button HorizontalAlignment="Left" Grid.Row="3" Click="GoBackButton_Click" Width="100" Height="20" Margin="5,20,0,0">Zpět</Button>
         </Grid>
     </Grid>

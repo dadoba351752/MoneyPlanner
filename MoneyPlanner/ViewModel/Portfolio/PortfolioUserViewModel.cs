@@ -1,6 +1,7 @@
 ﻿using MoneyPlanner.Service.Api;
 using MoneyPlanner.Service.Database;
 using MoneyPlanner.Service.DTO;
+using MoneyPlanner.Service.Settings;
 using System.ComponentModel;
 
 namespace MoneyPlanner.ViewModel.Portfolio
@@ -14,13 +15,15 @@ namespace MoneyPlanner.ViewModel.Portfolio
         }
         UserDTO _user = new UserDTO();
         TransactionRepository transactionRepository = new TransactionRepository();
+        CurrencySettings currencySettings = new CurrencySettings();
         private decimal totalValue;
         public PortfolioUserViewModel(UserDTO user)
         {
             _user = user;
             UserHeaderTextBlock = _user.Name + " " + _user.Surname;
             SetTotalValue(user);
-            PortfolioValueTextBox = $"Celková hodnota portfolia: " + totalValue + " fiktivních peněz :)";
+            string currency = currencySettings.CurrencyEnumToString(currencySettings.GetCurrency());
+            PortfolioValueTextBox = $"Celková hodnota portfolia: " + totalValue + " " + currency;
         }
         private void SetTotalValue(UserDTO user)
         //private async void SetTotalValue(UserDTO user)

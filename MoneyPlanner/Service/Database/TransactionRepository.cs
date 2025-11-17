@@ -30,11 +30,11 @@ namespace MoneyPlanner.Service.Database
                 try
                 {
                     command.ExecuteNonQuery();
-                    messageService.ShowInformation("Investice byla úspěšný, budete přesměrováni.");                }
+                    messageService.ShowInformation("Investice byla úspěšná, budete přesměrováni.");
+                }
                 catch (Exception ex)
                 {
                     messageService.ShowError(ex.Message);
-                    //MessageBox.Show("Tato akce nelze provést.", "Došlo k chybě.", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
