@@ -1,181 +1,146 @@
-MoneyPlanner
+# MoneyPlanner
 
-MoneyPlanner je osobní finanční aplikace vyvíjená v jazyce C# s využitím WPF.
-Projekt je stále ve fázi vývoje – aplikace není hotová a průběžně se mění.
+MoneyPlanner je osobní finanční aplikace vyvíjená v jazyce C# s využitím WPF.  
+Projekt je stále ve fázi vývoje – aplikace není hotová a průběžně se mění.  
 Slouží primárně ke studijním účelům (procvičení C#, WPF, práce s databází a API).
 
-Cíle a zaměření projektu
+---
 
-vytvořit desktopovou WPF aplikaci pro základní správu osobních financí,
+## Cíle a zaměření projektu
 
-naučit se pracovat s MVVM přístupem,
+- vytvořit desktopovou WPF aplikaci pro základní správu osobních financí,
+- naučit se pracovat s MVVM přístupem,
+- integrovat externí API pro akciová data,
+- ukládat data lokálně pomocí SQLite,
+- vyzkoušet si tvorbu jednoduchých finančních kalkulaček.
 
-integrovat externí API pro akciová data,
+---
 
-ukládat data lokálně pomocí SQLite,
+## Hlavní funkce
 
-vyzkoušet si tvorbu jednoduchých finančních kalkulaček.
+### Portfolio
 
-Hlavní funkce
-Portfolio
+- základ aplikace pro správu uživatelského portfolia,
+- dostupné obrazovky:
+  - přehled uživatele a jeho portfolia,
+  - přidání transakce,
+  - zobrazení transakcí,
+  - uvítací / přehledová stránka portfolia,
+- některé části jsou rozpracované a budou dále rozšiřovány.
 
-základ aplikace pro správu uživatelského portfolia,
+### Kalkulačky
 
-obrazovky pro:
+#### Compound Interest Calculator
 
-přehled uživatele a jeho portfolia,
+- kalkulačka složeného úročení,
+- View: `View/Calculators/CompoundInterestCalculatorPage.xaml`
+- ViewModel: `ViewModel/Calculators/CompoundInterestCalculatorViewModel.cs`
 
-přidání transakce,
+#### Net Income Calculator
 
-zobrazení transakcí,
+- kalkulačka čistého příjmu,
+- View: `View/Calculators/NetIncomeCalculatorPage.xaml`
+- ViewModel: `ViewModel/Calculators/NetIncomeCalculatorViewModel.cs`
 
-uvítací / přehledovou stránku portfolia,
+---
 
-datová logika je postupně rozšiřována, některé části jsou rozpracované.
+## Práce s API
 
-Kalkulačky
+- integrace API AlphaVantage pro získávání informací o akciích,
+- klient je v `Service/Api/AlphaVantageClient.cs`,
+- slouží ke studiu práce s HTTP požadavky a JSON daty.
 
-V aplikaci jsou připravené jednoduché finanční kalkulačky:
+---
 
-Compound Interest Calculator
+## Databáze a data
 
-kalkulačka složeného úročení (dlouhodobé investice, úrok, období, růst hodnoty apod.),
+Aplikace využívá lokální databáze SQLite.
 
-View: View/Calculators/CompoundInterestCalculatorPage.xaml,
+Používané soubory:
 
-ViewModel: ViewModel/Calculators/CompoundInterestCalculatorViewModel.cs.
+- `Files/MoneyPlanner.db` – hlavní databáze,
+- `Files/TSLA.json` – ukázkový JSON pro testování,
+- `Database/users.db` – další databázový soubor.
 
-Net Income Calculator
 
-kalkulačka čistého příjmu, vhodná pro hrubé odhady čisté mzdy / čistého příjmu,
+---
 
-View: View/Calculators/NetIncomeCalculatorPage.xaml,
+## Struktura projektu
 
-ViewModel: ViewModel/Calculators/NetIncomeCalculatorViewModel.cs.
+### Složka `MoneyPlanner/`
 
-Obě kalkulačky jsou zatím ve vývoji – logika i UI se mohou měnit.
+- `App.xaml`, `App.xaml.cs`
+- `MainWindow.xaml`, `MainWindow.xaml.cs`
+- `DataAccess.cs`
+- `App.config`
 
-Práce s API
+### View – `MoneyPlanner/View/`
 
-integrace s externím API (AlphaVantage) pro získání informací o akciích,
+#### Kalkulačky (`View/Calculators/`)
+- `CompoundInterestCalculatorPage.xaml`
+- `NetIncomeCalculatorPage.xaml`
 
-klient je umístěn v Service/Api/AlphaVantageClient.cs,
+#### Portfolio (`View/Portfolio/`)
+- `PortfolioUserPage.xaml`
+- `PortfolioAddTransactionPage.xaml`
+- `PortfolioUserTransactionsPage.xaml`
+- `PortfolioWelcomePage.xaml`
 
-slouží ke studiu práce s HTTP požadavky a zpracováním JSON odpovědí.
+#### Služby
+- `View/Service/MessageService.cs`
 
-Databáze a data
+### ViewModely – `MoneyPlanner/ViewModel/`
 
-použití SQLite pro lokální ukládání dat,
+#### Kalkulačky (`ViewModel/Calculators/`)
+- `CompoundInterestCalculatorViewModel.cs`
+- `NetIncomeCalculatorViewModel.cs`
 
-soubory s databází a daty:
+#### Portfolio (`ViewModel/Portfolio/`)
+- `PortfolioUserViewModel.cs`
+- `PortfolioAddTransactionViewModel.cs`
+- `PortfolioUserTransactionsViewModel.cs`
+- `PortfolioWelcomeViewModel.cs`
 
-Files/MoneyPlanner.db – hlavní databáze aplikace,
+### Služby – `MoneyPlanner/Service/`
 
-Files/TSLA.json – ukázkový JSON soubor s daty pro testování,
+- `Service/Api/AlphaVantageClient.cs`
 
-Database/users.db – další databázový soubor používaný v projektu,
+### Databáze – `MoneyPlanner/Database/`
 
-přístup k datům je řešen přes třídu DataAccess.cs (a související logiku).
+- `users.db`
 
-Struktura projektu
+### Datové soubory – `MoneyPlanner/Files/`
 
-Hlavní složky:
+- `MoneyPlanner.db`
+- `TSLA.json`
 
-MoneyPlanner/
+---
 
-WPF projekt aplikace
+## Použité technologie
 
-App.xaml, MainWindow.xaml – start aplikace a hlavní okno
+- C# / .NET  
+- WPF (Windows Presentation Foundation)  
+- MVVM architektura  
+- SQLite  
+- externí API (AlphaVantage)  
+- Visual Studio
 
-DataAccess.cs – přístup k datům a databázová logika
+---
 
-App.config – konfigurace aplikace
-
-MoneyPlanner/View/
-
-WPF stránky (Views)
-
-View/Calculators/ – stránky kalkulaček
-
-CompoundInterestCalculatorPage.xaml
-
-NetIncomeCalculatorPage.xaml
-
-View/Portfolio/ – stránky pro práci s portfoliem
-
-PortfolioUserPage.xaml
-
-PortfolioAddTransactionPage.xaml
-
-PortfolioUserTransactionsPage.xaml
-
-PortfolioWelcomePage.xaml
-
-View/Service/MessageService.cs – služba pro uživatelské zprávy
-
-MoneyPlanner/ViewModel/
-
-ViewModely pro MVVM
-
-ViewModel/Calculators/
-
-CompoundInterestCalculatorViewModel.cs
-
-NetIncomeCalculatorViewModel.cs
-
-ViewModel/Portfolio/
-
-PortfolioUserViewModel.cs
-
-PortfolioAddTransactionViewModel.cs
-
-PortfolioUserTransactionsViewModel.cs
-
-PortfolioWelcomeViewModel.cs
-
-MoneyPlanner/Service/
-
-Service/Api/AlphaVantageClient.cs – klient pro externí API
-
-MoneyPlanner/Database/
-
-users.db – databázový soubor (SQLite)
-
-MoneyPlanner/Files/
-
-MoneyPlanner.db – databázový soubor (SQLite)
-
-TSLA.json – ukázkový JSON soubor s daty
-
-Kořen repozitáře:
-
-MoneyPlanner.sln – solution soubor pro Visual Studio
-
-.gitignore, .gitattributes – nastavení Git repozitáře
-
-Použité technologie
-
-C# / .NET
-
-WPF (Windows Presentation Foundation)
-
-MVVM (architektonický přístup – postupně aplikován)
-
-SQLite (lokální databáze)
-
-externí API (AlphaVantage)
-
-Visual Studio jako hlavní IDE
-
-Stav projektu
+## Stav projektu
 
 Projekt je aktivně ve vývoji:
 
-některé části logiky i UI jsou rozpracované nebo pouze připravené,
+- některé části logiky a UI jsou rozpracované,
+- chování aplikace není finální,
+- kód bude dále refaktorován,
+- projekt je určen především pro studium a získávání zkušeností s WPF a C#.
+  
+---
 
-chování aplikace není finální,
+## Screenshoty z aplikace
+<img width="647" height="821" alt="image" src="https://github.com/user-attachments/assets/d3b59ff3-7b6a-4ed2-afda-3dd072107e86" />
+<img width="643" height="825" alt="image" src="https://github.com/user-attachments/assets/f06badeb-237c-4901-bba6-6cd1f3af839d" />
+<img width="642" height="824" alt="image" src="https://github.com/user-attachments/assets/f4b76d80-96c5-4103-b8aa-2d2eee82c1ee" />
+<img width="641" height="822" alt="image" src="https://github.com/user-attachments/assets/2bd9de16-64bc-4b59-8285-88b6a9079068" />
 
-struktura kódu může být dále refaktorována,
-
-projekt slouží především pro osobní studium a průběžné zlepšování.
-techniky refaktoringu a práce na větším projektu.
