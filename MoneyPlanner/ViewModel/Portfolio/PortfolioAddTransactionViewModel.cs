@@ -4,6 +4,7 @@ using MoneyPlanner.Service.DTO;
 using MoneyPlanner.View.Helpers;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace MoneyPlanner.ViewModel.Portfolio
 {
@@ -36,7 +37,7 @@ namespace MoneyPlanner.ViewModel.Portfolio
         private string _investmentVolumeTextBox;
         public DateTime _investmentDateTextBox;
 
-        public async void ConfirmInvestmentName()
+        public async Task ConfirmInvestmentName()
         {
             var transaction = await AlphaVantageClient.SymbolSearch(InvestmentNameTextBox);
             if (transaction != null)
@@ -44,6 +45,7 @@ namespace MoneyPlanner.ViewModel.Portfolio
                 InvestmentNameTextBox = transaction.Name + " (" + transaction.Symbol + ")";
                 transactionToConfirm.Name = transaction.Name;
                 transactionToConfirm.Symbol = transaction.Symbol;
+                transactionToConfirm.Currency = transaction.Currency;
             }
             else _messageService.ShowError("Něco se nepovedlo, zkus to prosím znovu.");
         }

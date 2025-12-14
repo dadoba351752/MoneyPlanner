@@ -19,10 +19,12 @@ namespace MoneyPlanner.View.Portfolio
             _user = user;
             var vm = new PortfolioUserTransactionsViewModel();
             DataContext = vm;
+
+            //Načte transakce s ID uživatele a pošle je do datagridu
             var transactions = transactionRepository.GetTransactions(_user);
             vm.TransactionsDataGrid = transactions;
-            
         }
+        //Přesměruje uživatele zpět na uživatelskou stránku
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
             _navigationService.NavigateTo(new PortfolioUserPage(_navigationService, _user));

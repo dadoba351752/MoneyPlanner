@@ -12,12 +12,11 @@ namespace MoneyPlanner
             DataContext = new CompoundInterestCalculatorViewModel();
         }
 
+        //Kliknutí spočítá výsledné hodnoty
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
-            if(DataContext is CompoundInterestCalculatorViewModel vm)
-            {
-                vm.Calculate();
-            }
+            var vm = (CompoundInterestCalculatorViewModel)this.DataContext;
+            vm.Calculate();
         }
     }
 }

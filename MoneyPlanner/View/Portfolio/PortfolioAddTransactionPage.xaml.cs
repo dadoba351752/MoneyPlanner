@@ -4,6 +4,7 @@ using MoneyPlanner.Service.DTO;
 using MoneyPlanner.Service.Navigation;
 using MoneyPlanner.ViewModel.Portfolio;
 using System;
+using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,11 +22,13 @@ namespace MoneyPlanner.View.Portfolio
             _user = user;
             DataContext = new PortfolioAddTransactionViewModel(_user);
         }
-        private void ConfirmInvestmentNameButton_Click(object sender, RoutedEventArgs e)
+        //Potvrdí název akcie z textboxu a skrz API doplní její název a symbol
+        private async void ConfirmInvestmentNameButton_Click(object sender, RoutedEventArgs e)
         {
             var vm = (PortfolioAddTransactionViewModel)this.DataContext;
-            vm.ConfirmInvestmentName();
+            await vm.ConfirmInvestmentName();
         }
+        //Uloží transakci do databáze a přesměruje uživatele zpět na uživatelskou stránku
         private void ConfirmInvestmentButton_Click(object sender, RoutedEventArgs e)
         {
             var vm = (PortfolioAddTransactionViewModel)this.DataContext;

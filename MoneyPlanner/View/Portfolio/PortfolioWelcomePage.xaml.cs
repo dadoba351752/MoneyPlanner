@@ -11,17 +11,19 @@ namespace MoneyPlanner.View.Portfolio
     public partial class PortfolioWelcomePage : UserControl
     {
         private NavigationService _navigationService;
-        private MessageService _messageService;
+        private MessageService messageService = new MessageService();
+        private UserDTO user = new UserDTO();
+        private UserRepository repository = new UserRepository();
         public PortfolioWelcomePage(NavigationService navigationService)
         {
             InitializeComponent();
             _navigationService = navigationService;
-            _messageService = new MessageService();
-            DataContext = new PortfolioWelcomeViewModel();
+            var vm = new PortfolioWelcomeViewModel();
+            DataContext = vm;
+            vm.UserFoundTextIsVisible = "Hidden";
+            vm.UserFoundButtonIsVisible = "Hidden";
         }
-
-        UserDTO user = new UserDTO();
-        UserRepository repository = new UserRepository();
+        //Kliknutím vytvoří nového uživatele
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
             var vm = (PortfolioWelcomeViewModel)this.DataContext;
@@ -30,13 +32,14 @@ namespace MoneyPlanner.View.Portfolio
             string birthNumber = vm.BirthNumberCreateTextBox;
             vm.ClearCreateSearchBoxes();
 
-
+            //Validace na vyplněné hodnoty
             if (name != null && surname != null && birthNumber != null)
             {
                 repository.AddUser(name, surname, birthNumber);
             }
-            else _messageService.ShowError("Nebyly zadány některé hodnoty.");
+            else messageService.ShowError("Nebyly zadány některé hodnoty.");
         }
+        //Kliknutím vyhledá uživatele a zobrazí tlačítko s textblockem
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             var vm = (PortfolioWelcomeViewModel)this.DataContext;
@@ -48,13 +51,14 @@ namespace MoneyPlanner.View.Portfolio
                 if (user != null)
                 {
                     vm.UserFoundButtonText = user.Name + " " + user.Surname;
-                    vm.UserFoundButtonIsEnabled = true;
+                    vm.UserFoundButtonIsVisible = "Visible";
+                    vm.UserFoundTextIsVisible = "Visible";
                     vm.ClearCreateSearchBoxes();
                 }
-                else _messageService.ShowError("Uživatel nebyl nalezen, zkus to prosím znovu.");
+                else messageService.ShowError("Uživatel nebyl nalezen, zkus to prosím znovu.");
             }
         }
-
+        //Kliknutím přesměruje uživatele na uživatelskou stránku
         private void UserFoundButton_Click(object sender, RoutedEventArgs e)
         {
             _navigationService.NavigateTo(new PortfolioUserPage(_navigationService, user));

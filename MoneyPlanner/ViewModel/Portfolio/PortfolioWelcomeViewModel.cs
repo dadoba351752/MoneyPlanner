@@ -15,7 +15,8 @@ namespace MoneyPlanner.ViewModel.Portfolio
         public string _surnameCreateTextBox;
         public string _birthNumberCreateTextBox;
         public string _birthNumberSearchTextBox;
-        public bool _userFoundButtonIsEnabled;
+        public string _userFoundButtonIsVisible;
+        public string _userFoundTextIsVisible;
         public string _userFoundButtonText;
 
         public void ClearCreateSearchBoxes()
@@ -62,13 +63,23 @@ namespace MoneyPlanner.ViewModel.Portfolio
             }
         }
 
-        public bool UserFoundButtonIsEnabled
+        public string UserFoundButtonIsVisible
         {
-            get { return _userFoundButtonIsEnabled; }
+            get { return _userFoundButtonIsVisible; }
             set
             {
-                _userFoundButtonIsEnabled = value;
-                OnPropertyChanged(nameof(UserFoundButtonIsEnabled));
+                _userFoundButtonIsVisible = value;
+                OnPropertyChanged(nameof(UserFoundButtonIsVisible));
+            }
+        }
+
+        public string UserFoundTextIsVisible
+        {
+            get { return _userFoundTextIsVisible; }
+            set
+            {
+                _userFoundTextIsVisible = value;
+                OnPropertyChanged(nameof(UserFoundTextIsVisible));
             }
         }
 

@@ -27,6 +27,7 @@
                 <DataGridTextColumn Header="Název" Binding="{Binding Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Cena za kus" Binding="{Binding Price}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Měna" Binding="{Binding Currency}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Množství" Binding="{Binding Amount}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Objem" Binding="{Binding Volume}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Datum" Binding="{Binding Date}"></DataGridTextColumn>

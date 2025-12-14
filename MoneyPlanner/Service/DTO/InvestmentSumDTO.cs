@@ -7,6 +7,7 @@
         public decimal Amount { get; set; }
         public decimal AverageBuyPrice { get; set; }
         public decimal TodayPrice { get; set; }
+        public string Currency { get; set; }
         public int UserId { get; set; }
     }
 }

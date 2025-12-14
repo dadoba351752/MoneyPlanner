@@ -11,18 +11,20 @@ namespace MoneyPlanner.Service.Database
     public class TransactionRepository
     {
         public MessageService messageService = new MessageService();
+        //Přidá transakci
         public void AddTransaction(TransactionDTO transaction)
         {
             using (var connection = DatabaseHelper.GetConnection())
             {
                 var command = connection.CreateCommand();
                 command.CommandText =
-                    @"INSERT INTO Transactions (Name, Symbol, Price, Amount, Volume, Date, UserId)
-                    VALUES (@Name, @Symbol, @Price, @Amount, @Volume, @Date, @UserId)";
+                    @"INSERT INTO Transactions (Name, Symbol, Price, Currency, Amount, Volume, Date, UserId)
+                    VALUES (@Name, @Symbol, @Price, @Currency, @Amount, @Volume, @Date, @UserId)";
 
                 command.Parameters.AddWithValue("@Name", transaction.Name);
                 command.Parameters.AddWithValue("@Symbol", transaction.Symbol);
                 command.Parameters.AddWithValue("@Price", transaction.Price);
+                command.Parameters.AddWithValue("@Currency", transaction.Currency);
                 command.Parameters.AddWithValue("@Amount", transaction.Amount);
                 command.Parameters.AddWithValue("@Volume", transaction.Volume);
                 command.Parameters.AddWithValue("@Date", transaction.Date);
@@ -38,13 +40,14 @@ namespace MoneyPlanner.Service.Database
                 }
             }
         }
+        //Vrátí kolekci investic daného uživatele sesumovanou podle názvu a symbolu
         public List<InvestmentSumDTO> GetInvestmentSum(int userId)
         {
             using (var connection = DatabaseHelper.GetConnection())
             {
                 var command = connection.CreateCommand();
                 command.CommandText =
-                    @"SELECT Name, Symbol, SUM(Amount) AS TotalAmount, SUM(Price * Amount)/SUM(Amount) AS AveragePrice
+                    @"SELECT Name, Symbol, SUM(Amount) AS TotalAmount, SUM(Price * Amount)/SUM(Amount) AS AveragePrice, Currency
                     FROM Transactions
                     WHERE UserId = @UserId
                     GROUP BY Symbol, Name";
@@ -61,6 +64,7 @@ namespace MoneyPlanner.Service.Database
                         Symbol = reader.GetString(1),
                         Amount = Convert.ToDecimal(reader.GetString(2)),
                         AverageBuyPrice = Convert.ToDecimal(reader.GetString(3)),
+                        Currency = reader.GetString(4),
                         UserId = userId
                     };
                     InvestmentSum.Add(inv);
@@ -87,10 +91,11 @@ namespace MoneyPlanner.Service.Database
                         Name = reader.GetString(1),
                         Symbol = reader.GetString(2),
                         Price = int.Parse(reader.GetString(3)),
-                        Amount = int.Parse(reader.GetString(4)),
-                        Volume = int.Parse(reader.GetString(5)),
-                        Date = reader.GetString(6),
-                        UserId = int.Parse(reader.GetString(7))
+                        Currency = reader.GetString(4),
+                        Amount = int.Parse(reader.GetString(5)),
+                        Volume = int.Parse(reader.GetString(6)),
+                        Date = reader.GetString(7),
+                        UserId = int.Parse(reader.GetString(8))
                     };
                     transactions.Add(tr);
                 }

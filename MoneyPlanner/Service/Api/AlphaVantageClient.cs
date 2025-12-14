@@ -21,6 +21,8 @@ namespace MoneyPlanner.Service.Api
 
         public static async Task<TransactionDTO> SymbolSearch(string symbol)
         {
+            //Delay cca 1 vteřina z důvodu free API omezení na 1 request za vteřinu
+            await Task.Delay(1100);
             var url = $"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={symbol}&apikey={ApiKey}";
 
             var response = await client.GetAsync(url);
@@ -36,6 +38,7 @@ namespace MoneyPlanner.Service.Api
                 var first = result.BestMatches.First();
                 transaction.Name = first.Name;
                 transaction.Symbol = first.Symbol;
+                transaction.Currency = first.Currency;
                 return transaction;
             } catch(Exception ex)
             {
@@ -47,21 +50,23 @@ namespace MoneyPlanner.Service.Api
         //Zakomentované řádky jsou z důvodu denních limitů API na 25 volání denně.
         //Je nahraný soubor TSLA.json který obsahuje symbol: TSLA, testovat na BirthNumber = 000
         //Async metoda se používá v případě využití reálného API
-        public static InvestmentSumDTO GetTodayPrice(InvestmentSumDTO investment)
-        //public static async Task<InvestmentSumDTO> GetTodayPrice(InvestmentSumDTO investment)
+        //public static InvestmentSumDTO GetTodayPrice(InvestmentSumDTO investment)
+        public static async Task<InvestmentSumDTO> GetTodayPrice(InvestmentSumDTO investment)
         {
-            //Řádky níže se využívají v případě použití reálného API
-            //var url = $"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={investment.Symbol}&interval=5min&apikey={ApiKey}";
-            //https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&apikey=MYZUAUUP9MOXKG61
-            //var response = await client.GetAsync(url);
-            //response.EnsureSuccessStatusCode();
-            //string json = await response.Content.ReadAsStringAsync();
+            //Delay cca 1 vteřina z důvodu free API omezení na 1 request za vteřinu
+            await Task.Delay(1100);
 
-            //Stringy níže jsou pro fake souborové API TSLA
-            string BaseDir = AppContext.BaseDirectory;
-            string ProjectDir = Directory.GetParent(BaseDir).Parent.Parent.Parent.FullName;
-            string fakeResponse = Path.Combine(ProjectDir, "Files", "TSLA.json");
-            string json = File.ReadAllText(fakeResponse);
+            //Řádky níže se využívají v případě použití reálného API
+            var url = $"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={investment.Symbol}&interval=5min&apikey={ApiKey}";
+            var response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            string json = await response.Content.ReadAsStringAsync();
+
+            //Řádky níže jsou pro fake souborové API TSLA
+            //string BaseDir = AppContext.BaseDirectory;
+            //string ProjectDir = Directory.GetParent(BaseDir).Parent.Parent.Parent.FullName;
+            //string fakeResponse = Path.Combine(ProjectDir, "Files", "TSLA.json");
+            //string json = File.ReadAllText(fakeResponse);
 
             var result = JsonSerializer.Deserialize<TodayPrice>(json);
             try
@@ -74,6 +79,32 @@ namespace MoneyPlanner.Service.Api
                 _messageService.ShowError(ex.Message);
             }
             return investment;
+        }
+
+        //Vrací kurz pro currencyFrom/currencyTo
+        public static async Task<decimal> GetCurrencyExchangeRate(string currencyFrom, string currencyTo)
+        {
+            //Delay cca 1 vteřina z důvodu free API omezení na 1 request za vteřinu
+            await Task.Delay(1100);
+            decimal rate = 0;
+            var url = $"https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency={currencyFrom}&to_currency={currencyTo}&apikey={ApiKey}";
+            var response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            string json = await response.Content.ReadAsStringAsync();
+
+            var exchangeRate = JsonSerializer.Deserialize<CurrencyExchangeRate>(json);
+            try
+            {
+                //Delay cca 1 vteřina z důvodu free API omezení na 1 request za vteřinu
+                await Task.Delay(1100);
+                rate = Math.Round(Decimal.Parse((exchangeRate.RealtimeCurrencyExchangeRate.ExchangeRate), NumberStyles.Any, CultureInfo.InvariantCulture), 2);
+                return rate;
+
+            } catch(Exception ex)
+            {
+                _messageService.ShowError(ex.Message);
+            }
+            return rate;
         }
     }
 }

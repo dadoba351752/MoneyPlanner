@@ -50,9 +50,10 @@ namespace MoneyPlanner.Service.Database
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
                     Name TEXT NOT NULL,
                     Symbol TEXT,
-                    Price INTEGER NOT NULL, -- stored in cents
+                    Price INTEGER NOT NULL,
+                    Currency TEXT NOT NULL,
                     Amount INTEGER NOT NULL,
-                    Volume INTEGER NOT NULL, -- stored in cents
+                    Volume INTEGER NOT NULL,
                     Date TEXT NOT NULL, -- 'YYYY-MM-DD'
                     UserId INTEGER NOT NULL,
                     FOREIGN KEY (UserId) REFERENCES Uzivatele(Id) ON DELETE RESTRICT

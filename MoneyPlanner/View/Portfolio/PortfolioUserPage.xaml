@@ -15,7 +15,12 @@
         <TextBlock Grid.Row="0" FontWeight="Bold" FontSize="20" Text="{Binding UserHeaderTextBlock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
 
         <Grid Grid.Row="1">
-            <TextBlock Text="{Binding PortfolioValueTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding PortfolioValueTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+            <Button Grid.Column="1" Margin="10,0,0,0"  Height="15" Width="15" FontSize="10" FontWeight="Bold" Content="⭮" Click="RefreshPortfolioValueButton_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Button>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
@@ -26,7 +31,7 @@
             </Grid.RowDefinitions>
             <Button HorizontalAlignment="Left" Grid.Row="0" Click="AddInvestmentButton_Click" Width="100" Height="20" Margin="5">Přidat investici</Button>
             <Button HorizontalAlignment="Left" Grid.Row="1" Click="ShowTransactionsButton_Click" Width="100" Height="20"  Margin="5">Zobrazit transakce</Button>
-            <Button HorizontalAlignment="Left" Grid.Row="2" Click="SettingsButton_Click" Width="100" Height="20"  Margin="5">Spravovat</Button>
+            <Button HorizontalAlignment="Left" Grid.Row="2" Click="SettingsButton_Click" Width="100" Height="20"  Margin="5">Nastavení aplikace</Button>
             <Button HorizontalAlignment="Left" Grid.Row="3" Click="GoBackButton_Click" Width="100" Height="20" Margin="5,20,0,0">Zpět</Button>
         </Grid>
     </Grid>

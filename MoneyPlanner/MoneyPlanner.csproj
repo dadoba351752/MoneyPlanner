@@ -156,6 +156,9 @@
     <Compile Include="ViewModel\Portfolio\PortfolioUserViewModel.cs" />
     <Compile Include="ViewModel\Portfolio\PortfolioWelcomeViewModel.cs" />
     <Compile Include="Service\Interfaces\IMessageService.cs" />
+    <Compile Include="View\Home\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Portfolio\PortfolioSettingsPage.xaml.cs">
       <DependentUpon>PortfolioSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -190,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Calculators\NetIncomeCalculatorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Home\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

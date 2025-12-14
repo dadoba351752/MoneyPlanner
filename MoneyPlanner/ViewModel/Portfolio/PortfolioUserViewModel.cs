@@ -3,6 +3,7 @@ using MoneyPlanner.Service.Database;
 using MoneyPlanner.Service.DTO;
 using MoneyPlanner.Service.Settings;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace MoneyPlanner.ViewModel.Portfolio
 {
@@ -16,26 +17,34 @@ namespace MoneyPlanner.ViewModel.Portfolio
         UserDTO _user = new UserDTO();
         TransactionRepository transactionRepository = new TransactionRepository();
         CurrencySettings currencySettings = new CurrencySettings();
-        private decimal totalValue;
+        private decimal totalValue = 0;
+        private string currency;
         public PortfolioUserViewModel(UserDTO user)
         {
             _user = user;
             UserHeaderTextBlock = _user.Name + " " + _user.Surname;
-            SetTotalValue(user);
-            string currency = currencySettings.CurrencyEnumToString(currencySettings.GetCurrency());
-            PortfolioValueTextBox = $"Celková hodnota portfolia: " + totalValue + " " + currency;
+            currency = currencySettings.CurrencyEnumToString(currencySettings.GetCurrency());
+            PortfolioValueTextBox = "Pro získání aktuální hodnoty portfolia, klikněte zde: ";
         }
-        private void SetTotalValue(UserDTO user)
-        //private async void SetTotalValue(UserDTO user)
+        public async Task SetTotalValue(UserDTO user)
+        //public void SetTotalValue(UserDTO user)
         {
             var investmentSum = transactionRepository.GetInvestmentSum(user.Id);
-            foreach (var i in investmentSum)
+            for (var i = 0; i < investmentSum.Count; i++)
             {
-                var inv = AlphaVantageClient.GetTodayPrice(i);
+                //var inv = AlphaVantageClient.GetTodayPrice(investmentSum[i]);
                 //Pokud fejkuju, nepoužívám řádek níže a naopak
-                //var inv = await AlphaVantageClient.GetTodayPrice(i);
-                totalValue += (inv.Amount * inv.TodayPrice);
+                var inv = await AlphaVantageClient.GetTodayPrice(investmentSum[i]);
+                if(inv.Currency != currency)
+                {
+                    var rate = await AlphaVantageClient.GetCurrencyExchangeRate(inv.Currency, currency);
+                    totalValue += rate * (inv.Amount * inv.TodayPrice);
+                } else
+                {
+                    totalValue += (inv.Amount * inv.TodayPrice);
+                }
             }
+            PortfolioValueTextBox = "Celková hodnota portfolia: " + totalValue + " " + currency;
         }
         private string _userHeaderTextBlock;
         private string _portfolioValueTextBox;

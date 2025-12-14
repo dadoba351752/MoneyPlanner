@@ -23,6 +23,7 @@ namespace MoneyPlanner.View.Portfolio
             _navigationService = navigationService;
             _user = user;
         }
+        //Kliknutím uloží nastavení
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             var vm = (PortfolioSettingsViewModel)this.DataContext;
@@ -35,6 +36,7 @@ namespace MoneyPlanner.View.Portfolio
                 messageService.ShowError(ex.Message);
             }
         }
+        //Kliknutím přesměruje uživatele zpět na uživatelskou stránku
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
             _navigationService.NavigateTo(new PortfolioUserPage(_navigationService, _user));

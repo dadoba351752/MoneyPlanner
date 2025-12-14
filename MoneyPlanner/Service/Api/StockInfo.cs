@@ -19,10 +19,13 @@ namespace MoneyPlanner.Service.Api
 
         [JsonPropertyName("2. name")]
         public string Name { get; set; }
+
+        [JsonPropertyName("8. currency")]
+        public string Currency { get; set; }
     }
     public class TodayPrice
     {
-        [JsonPropertyName("Time Series (5min)")]
+        [JsonPropertyName("Time Series (Daily)")]
         public Dictionary<string, PriceResult> TimeSeries { get; set; }
     }
     public class PriceResult
@@ -38,4 +41,16 @@ namespace MoneyPlanner.Service.Api
         [JsonPropertyName("5. volume")]
         public string Volume { get; set; }
     }
+    public class CurrencyExchangeRate
+    {
+        [JsonPropertyName("Realtime Currency Exchange Rate")]
+        public CurrencyExchangeRateItems RealtimeCurrencyExchangeRate { get; set; }
+    }
+
+    public class CurrencyExchangeRateItems
+    {
+        [JsonPropertyName("5. Exchange Rate")]
+        public string ExchangeRate { get; set; }
+    }
+
 }
