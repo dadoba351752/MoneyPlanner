@@ -5,10 +5,10 @@ namespace MoneyPlanner
 {
     public partial class NetIncomeCalculatorPage : UserControl
     {
-        public NetIncomeCalculatorPage()
+        public NetIncomeCalculatorPage(NetIncomeCalculatorViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = new NetIncomeCalculatorViewModel();
+            DataContext = viewModel;
         }
     }
 }

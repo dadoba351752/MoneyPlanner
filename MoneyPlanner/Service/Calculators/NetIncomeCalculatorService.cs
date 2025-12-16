@@ -9,25 +9,25 @@ namespace MoneyPlanner.Service.Calculators
 {
     public class NetIncomeCalculatorService
     {
-        public decimal GrossIncome { get; }
-        public decimal SocialInsurance { get; }
-        public decimal HealthInsurance { get; }
-        public decimal TaxAdvanceBeforeAllowance { get; }
-        public decimal TaxAdvance { get; }
-        public decimal TaxBonus { get; }
-        public decimal NetIncome { get; }
-        public decimal EmployerSocialInsurance { get; }
-        public decimal EmployerHealthInsurance { get; }
-        public decimal EmployerCostPerEmployee { get; }
-        public decimal TaxpayerAllowanceValue { get; }
-        public int TaxDeductionChildrenCount { get; }
-        public int TaxDeductionZtppChildrenCount { get; }
-        public decimal TaxDeductionChildrenValue { get; }
-        public decimal LowerInvalidityAllowanceValue { get; }
-        public decimal HigherInvalidityAllowanceValue { get; }
-        public decimal ZtppAllowanceValue { get; }
-        public decimal SpouseAllowanceValue { get; }
-        public decimal ZtppSpouseAllowanceValue { get; }
+        public decimal GrossIncome { get; set; }
+        public decimal SocialInsurance { get; set; }
+        public decimal HealthInsurance { get; set; }
+        public decimal TaxAdvanceBeforeAllowance { get; set; }
+        public decimal TaxAdvance { get; set; }
+        public decimal TaxBonus { get; set; }
+        public decimal NetIncome { get; set; }
+        public decimal EmployerSocialInsurance { get; set; }
+        public decimal EmployerHealthInsurance { get; set; }
+        public decimal EmployerCostPerEmployee { get; set; }
+        public decimal TaxpayerAllowanceValue { get; set; }
+        public int TaxDeductionChildrenCount { get; set; }
+        public int TaxDeductionZtppChildrenCount { get; set; }
+        public decimal TaxDeductionChildrenValue { get; set; }
+        public decimal LowerInvalidityAllowanceValue { get; set; }
+        public decimal HigherInvalidityAllowanceValue { get; set; }
+        public decimal ZtppAllowanceValue { get; set; }
+        public decimal SpouseAllowanceValue { get; set; }
+        public decimal ZtppSpouseAllowanceValue { get; set; }
 
         //Procenta odvodů na pojištění z hrubé mzdy
         private const decimal socialInsurance = 0.065M;
@@ -54,18 +54,23 @@ namespace MoneyPlanner.Service.Calculators
         private const decimal spouseAllowanceValue = 2070M;
         private const decimal ztppSpouseAllowanceValue = 4140M;
 
-        public NetIncomeCalculatorService
+        public NetIncomeCalculatorService()
+        {
+
+        }
+
+        public void Calculate
             (
-            decimal grossIncome, 
-            bool taxpayerAllowanceBool, 
-            int childrenCount, 
-            int ztppChildrenCount, 
-            bool lowerInvalidityBool, 
-            bool higherInvalidityBool, 
-            bool ztppAllowanceBool, 
-            bool spouseAllowanceBool, 
+            decimal grossIncome,
+            bool taxpayerAllowanceBool,
+            int childrenCount,
+            int ztppChildrenCount,
+            bool lowerInvalidityBool,
+            bool higherInvalidityBool,
+            bool ztppAllowanceBool,
+            bool spouseAllowanceBool,
             bool ztppSpouseAllowanceBool
-            )
+            ) 
         {
             GrossIncome = grossIncome;
             //Spočítá sociální a nemocenské pojištění placené zaměstnancem

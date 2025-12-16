@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using MoneyPlanner.Service.Navigation;
+using MoneyPlanner.Service.Interfaces;
 using MoneyPlanner.ViewModel.Portfolio;
 using MoneyPlanner.Service.DTO;
 using MoneyPlanner.Service.Api;
@@ -10,41 +10,41 @@ namespace MoneyPlanner.View.Portfolio
 {
     public partial class PortfolioUserPage : UserControl
     {
-        private NavigationService _navigationService;
-        private UserDTO _user;
-        private PortfolioUserViewModel vm;
-        public PortfolioUserPage(NavigationService navigationService, UserDTO user)
+        private INavigationService _navigationService;
+        private UserDTO _user = new UserDTO();
+        private PortfolioUserViewModel _viewModel;
+        public PortfolioUserPage(INavigationService navigationService, IUserContext userContext, PortfolioUserViewModel viewModel)
         {
             InitializeComponent();
-            _user = user;
+            _user = userContext.CurrentUser;
             _navigationService = navigationService;
-            DataContext = new PortfolioUserViewModel(user);
-            vm = (PortfolioUserViewModel)DataContext;
+            _viewModel = viewModel;
+            DataContext = _viewModel;
         }
 
         //Přesměruje uživatele zpět na úvodní stránku
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
-            _navigationService.NavigateTo(new PortfolioWelcomePage(_navigationService));
+            _navigationService.NavigateTo<PortfolioWelcomePage>();
         }
         //přesměruje uživatele na stránku pro přidání transakce
         private void AddInvestmentButton_Click(object sender, RoutedEventArgs e)
         {
-            _navigationService.NavigateTo(new PortfolioAddTransactionPage(_navigationService, _user));
+            _navigationService.NavigateTo<PortfolioAddTransactionPage>();
         }
         //Přesměruje uživatele na stránku se seznamem transakcí
         private void ShowTransactionsButton_Click(object sender, RoutedEventArgs e)
         {
-            _navigationService.NavigateTo(new PortfolioUserTransactionsPage(_navigationService, _user));
+            _navigationService.NavigateTo<PortfolioUserTransactionsPage>();
         }
         //Přesměruje uživatele na stránku s nastavení
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            _navigationService.NavigateTo(new PortfolioSettingsPage(_navigationService, _user));
+            _navigationService.NavigateTo<PortfolioSettingsPage>();
         }
         private async void RefreshPortfolioValueButton_Click(object sender, RoutedEventArgs e)
         {
-            await vm.SetTotalValue(_user);
+            await _viewModel.SetTotalValue(_user);
         }
     }
 }

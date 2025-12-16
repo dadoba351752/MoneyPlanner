@@ -11,6 +11,12 @@ namespace MoneyPlanner.ViewModel.Calculators
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private NetIncomeCalculatorService _calculatorService;
+        public NetIncomeCalculatorViewModel(NetIncomeCalculatorService calculatorService)
+        {
+            _calculatorService = _calculatorService;
+        }
+
         private string _grossIncome;
         private decimal _employeeSocialInsurance;
         private decimal _employeeHealthInsurance;
@@ -39,9 +45,21 @@ namespace MoneyPlanner.ViewModel.Calculators
         private decimal grossIncome = 0;
         private void RefreshForm()
         {
-            NetIncomeCalculatorService calculatorService = new NetIncomeCalculatorService
+            //NetIncomeCalculatorService calculatorService = new NetIncomeCalculatorService
+            //    (
+            //    grossIncome, 
+            //    TaxpayerAllowanceCheckbox, 
+            //    GetChildrenCount(TaxDeductionChildrenCount), 
+            //    GetChildrenCount(TaxDeductionZtppChildrenCount),
+            //    LowerInvalidityAllowanceCheckbox,
+            //    HigherInvalidityAllowanceCheckbox,
+            //    ZtppAllowanceCheckbox,
+            //    SpouseAllowanceCheckbox,
+            //    ZtppSpouseAllowanceCheckbox
+            //    );
+            _calculatorService.Calculate
                 (
-                grossIncome, 
+                grossIncome,
                 TaxpayerAllowanceCheckbox, 
                 GetChildrenCount(TaxDeductionChildrenCount), 
                 GetChildrenCount(TaxDeductionZtppChildrenCount),
@@ -51,22 +69,22 @@ namespace MoneyPlanner.ViewModel.Calculators
                 SpouseAllowanceCheckbox,
                 ZtppSpouseAllowanceCheckbox
                 );
-            EmployeeSocialInsurance = calculatorService.SocialInsurance;
-            EmployeeHealthInsurance = calculatorService.HealthInsurance;
-            TaxAdvanceBeforeAllowance = calculatorService.TaxAdvanceBeforeAllowance;
-            TaxAdvance = calculatorService.TaxAdvance;
-            TaxBonus = calculatorService.TaxBonus;
-            NetIncome = calculatorService.NetIncome;
-            EmployerSocialInsurance = calculatorService.EmployerSocialInsurance;
-            EmployerHealthInsurance = calculatorService.EmployerHealthInsurance;
-            EmployerCostPerEmployee = calculatorService.EmployerCostPerEmployee;
-            TaxpayerAllowanceValue = calculatorService.TaxpayerAllowanceValue;
-            TaxDeductionChildrenValue = calculatorService.TaxDeductionChildrenValue;
-            LowerInvalidityAllowanceValue = calculatorService.LowerInvalidityAllowanceValue;
-            HigherInvalidityAllowanceValue = calculatorService.HigherInvalidityAllowanceValue;
-            ZtppAllowanceValue = calculatorService.ZtppAllowanceValue;
-            SpouseAllowanceValue = calculatorService.SpouseAllowanceValue;
-            ZtppSpouseAllowanceValue = calculatorService.ZtppSpouseAllowanceValue;
+            EmployeeSocialInsurance = _calculatorService.SocialInsurance;
+            EmployeeHealthInsurance = _calculatorService.HealthInsurance;
+            TaxAdvanceBeforeAllowance = _calculatorService.TaxAdvanceBeforeAllowance;
+            TaxAdvance = _calculatorService.TaxAdvance;
+            TaxBonus = _calculatorService.TaxBonus;
+            NetIncome = _calculatorService.NetIncome;
+            EmployerSocialInsurance = _calculatorService.EmployerSocialInsurance;
+            EmployerHealthInsurance = _calculatorService.EmployerHealthInsurance;
+            EmployerCostPerEmployee = _calculatorService.EmployerCostPerEmployee;
+            TaxpayerAllowanceValue = _calculatorService.TaxpayerAllowanceValue;
+            TaxDeductionChildrenValue = _calculatorService.TaxDeductionChildrenValue;
+            LowerInvalidityAllowanceValue = _calculatorService.LowerInvalidityAllowanceValue;
+            HigherInvalidityAllowanceValue = _calculatorService.HigherInvalidityAllowanceValue;
+            ZtppAllowanceValue = _calculatorService.ZtppAllowanceValue;
+            SpouseAllowanceValue = _calculatorService.SpouseAllowanceValue;
+            ZtppSpouseAllowanceValue = _calculatorService.ZtppSpouseAllowanceValue;
         }
         public string GrossIncome
         {

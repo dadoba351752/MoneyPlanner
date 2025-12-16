@@ -73,11 +73,17 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.10, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.10\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.1\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Sqlite, Version=9.0.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Sqlite.Core.9.0.10\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=10.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.10.0.1\lib\net462\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=10.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.10.0.1\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="SQLitePCLRaw.batteries_v2, Version=3.0.2.2801, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
       <HintPath>..\packages\SQLitePCLRaw.config.e_sqlite3.3.0.2\lib\net471\SQLitePCLRaw.batteries_v2.dll</HintPath>
@@ -143,11 +149,18 @@
     </ApplicationDefinition>
     <Compile Include="Service\Api\AlphaVantageClient.cs" />
     <Compile Include="Service\Api\StockInfo.cs" />
+    <Compile Include="Service\Context\UserContext.cs" />
     <Compile Include="Service\Database\TransactionRepository.cs" />
     <Compile Include="Service\DTO\InvestmentSumDTO.cs" />
     <Compile Include="Service\DTO\TransactionDTO.cs" />
     <Compile Include="Service\DTO\UserDTO.cs" />
     <Compile Include="Service\Enum\CurrenciesEnum.cs" />
+    <Compile Include="Service\Interfaces\IAlphaVantageClient.cs" />
+    <Compile Include="Service\Interfaces\ICurrencySettings.cs" />
+    <Compile Include="Service\Interfaces\INavigationService.cs" />
+    <Compile Include="Service\Interfaces\ITransactionRepository.cs" />
+    <Compile Include="Service\Interfaces\IUserContext.cs" />
+    <Compile Include="Service\Interfaces\IUserRepository.cs" />
     <Compile Include="Service\Navigation\NavigationService.cs" />
     <Compile Include="Service\Settings\CurrencySettings.cs" />
     <Compile Include="ViewModel\Portfolio\PortfolioAddTransactionViewModel.cs" />

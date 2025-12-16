@@ -1,18 +1,22 @@
 ﻿using MoneyPlanner.Service.DTO;
+using MoneyPlanner.Service.Interfaces;
 using MoneyPlanner.View.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows;
 
 namespace MoneyPlanner.Service.Database
 {
-    public class TransactionRepository
+    public class TransactionRepository : ITransactionRepository
     {
-        public MessageService messageService = new MessageService();
+        private IMessageService _messageService;
+        public TransactionRepository(IMessageService messageService)
+        {
+            _messageService = messageService;
+        }
+
         //Přidá transakci
-        public void AddTransaction(TransactionDTO transaction)
+        public bool AddTransaction(TransactionDTO transaction)
         {
             using (var connection = DatabaseHelper.GetConnection())
             {
@@ -32,11 +36,13 @@ namespace MoneyPlanner.Service.Database
                 try
                 {
                     command.ExecuteNonQuery();
-                    messageService.ShowInformation("Investice byla úspěšná, budete přesměrováni.");
+                    _messageService.ShowInformation("Investice byla úspěšná, budete přesměrováni.");
+                    return true;
                 }
-                catch (Exception ex)
+                catch
                 {
-                    messageService.ShowError(ex.Message);
+                    _messageService.ShowError("Je potřeba nejdříve potvrdit CP.");
+                    return false;
                 }
             }
         }

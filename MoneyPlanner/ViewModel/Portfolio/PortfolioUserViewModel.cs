@@ -1,6 +1,7 @@
 ﻿using MoneyPlanner.Service.Api;
 using MoneyPlanner.Service.Database;
 using MoneyPlanner.Service.DTO;
+using MoneyPlanner.Service.Interfaces;
 using MoneyPlanner.Service.Settings;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -15,29 +16,33 @@ namespace MoneyPlanner.ViewModel.Portfolio
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         UserDTO _user = new UserDTO();
-        TransactionRepository transactionRepository = new TransactionRepository();
-        CurrencySettings currencySettings = new CurrencySettings();
+        ITransactionRepository _transactionRepository;
+        ICurrencySettings _currencySettings;
+        private IAlphaVantageClient _apiClient;
         private decimal totalValue = 0;
         private string currency;
-        public PortfolioUserViewModel(UserDTO user)
+        public PortfolioUserViewModel(IUserContext userContext, IAlphaVantageClient apiClient, ITransactionRepository transactionRepository, ICurrencySettings currencySettings)
         {
-            _user = user;
+            _user = userContext.CurrentUser;
+            _apiClient = apiClient;
+            _transactionRepository = transactionRepository;
+            _currencySettings = currencySettings;
             UserHeaderTextBlock = _user.Name + " " + _user.Surname;
-            currency = currencySettings.CurrencyEnumToString(currencySettings.GetCurrency());
+            currency = _currencySettings.CurrencyEnumToString(_currencySettings.GetCurrency());
             PortfolioValueTextBox = "Pro získání aktuální hodnoty portfolia, klikněte zde: ";
         }
         public async Task SetTotalValue(UserDTO user)
         //public void SetTotalValue(UserDTO user)
         {
-            var investmentSum = transactionRepository.GetInvestmentSum(user.Id);
+            var investmentSum = _transactionRepository.GetInvestmentSum(user.Id);
             for (var i = 0; i < investmentSum.Count; i++)
             {
                 //var inv = AlphaVantageClient.GetTodayPrice(investmentSum[i]);
                 //Pokud fejkuju, nepoužívám řádek níže a naopak
-                var inv = await AlphaVantageClient.GetTodayPrice(investmentSum[i]);
+                var inv = await _apiClient.GetTodayPrice(investmentSum[i]);
                 if(inv.Currency != currency)
                 {
-                    var rate = await AlphaVantageClient.GetCurrencyExchangeRate(inv.Currency, currency);
+                    var rate = await _apiClient.GetCurrencyExchangeRate(inv.Currency, currency);
                     totalValue += rate * (inv.Amount * inv.TodayPrice);
                 } else
                 {

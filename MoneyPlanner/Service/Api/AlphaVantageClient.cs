@@ -1,4 +1,5 @@
 ﻿using MoneyPlanner.Service.DTO;
+using MoneyPlanner.Service.Interfaces;
 using MoneyPlanner.View.Helpers;
 using System;
 using System.Globalization;
@@ -11,7 +12,7 @@ using System.Windows;
 
 namespace MoneyPlanner.Service.Api
 {
-    public class AlphaVantageClient
+    public class AlphaVantageClient : IAlphaVantageClient
     {
         public static MessageService _messageService = new MessageService();
         private const string ApiKey = "MYZUAUUP9MOXKG61";
@@ -19,7 +20,7 @@ namespace MoneyPlanner.Service.Api
         private static readonly HttpClient client = new HttpClient();
         //https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tsla&apikey=MYZUAUUP9MOXKG61
 
-        public static async Task<TransactionDTO> SymbolSearch(string symbol)
+        public async Task<TransactionDTO> SymbolSearch(string symbol)
         {
             //Delay cca 1 vteřina z důvodu free API omezení na 1 request za vteřinu
             await Task.Delay(1100);
@@ -51,7 +52,7 @@ namespace MoneyPlanner.Service.Api
         //Je nahraný soubor TSLA.json který obsahuje symbol: TSLA, testovat na BirthNumber = 000
         //Async metoda se používá v případě využití reálného API
         //public static InvestmentSumDTO GetTodayPrice(InvestmentSumDTO investment)
-        public static async Task<InvestmentSumDTO> GetTodayPrice(InvestmentSumDTO investment)
+        public async Task<InvestmentSumDTO> GetTodayPrice(InvestmentSumDTO investment)
         {
             //Delay cca 1 vteřina z důvodu free API omezení na 1 request za vteřinu
             await Task.Delay(1100);
@@ -82,7 +83,7 @@ namespace MoneyPlanner.Service.Api
         }
 
         //Vrací kurz pro currencyFrom/currencyTo
-        public static async Task<decimal> GetCurrencyExchangeRate(string currencyFrom, string currencyTo)
+        public async Task<decimal> GetCurrencyExchangeRate(string currencyFrom, string currencyTo)
         {
             //Delay cca 1 vteřina z důvodu free API omezení na 1 request za vteřinu
             await Task.Delay(1100);

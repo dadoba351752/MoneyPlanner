@@ -1,6 +1,7 @@
 ﻿using MoneyPlanner.Service.Api;
 using MoneyPlanner.Service.Database;
 using MoneyPlanner.Service.DTO;
+using MoneyPlanner.Service.Interfaces;
 using MoneyPlanner.View.Helpers;
 using System;
 using System.ComponentModel;
@@ -15,14 +16,20 @@ namespace MoneyPlanner.ViewModel.Portfolio
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        UserDTO _user = new UserDTO();
-        TransactionRepository transactionRepository = new TransactionRepository();
+
+        private UserDTO user;
         TransactionDTO transactionToConfirm = new TransactionDTO();
-        MessageService _messageService = new MessageService();
-        public PortfolioAddTransactionViewModel(UserDTO user)
+
+        private ITransactionRepository _transactionRepository;
+        private IMessageService _messageService;
+        private IAlphaVantageClient _apiClient;
+        public PortfolioAddTransactionViewModel(IUserContext userContext, IAlphaVantageClient apiClient, ITransactionRepository transactionRepository, IMessageService messageService)
         {
-            _user = user;
-            NameTextBlock = _user.Name + " " + _user.Surname + " ID: " + _user.Id;
+            user = userContext.CurrentUser;
+            _apiClient = apiClient;
+            _transactionRepository = transactionRepository;
+            _messageService = messageService;
+            NameTextBlock = user.Name + " " + user.Surname + " ID: " + user.Id;
             int CurrentYear = DateTime.Now.Year;
             int CurrentMonth = DateTime.Now.Month;
             int CurrentDay = DateTime.Now.Day;
@@ -39,7 +46,7 @@ namespace MoneyPlanner.ViewModel.Portfolio
 
         public async Task ConfirmInvestmentName()
         {
-            var transaction = await AlphaVantageClient.SymbolSearch(InvestmentNameTextBox);
+            var transaction = await _apiClient.SymbolSearch(InvestmentNameTextBox);
             if (transaction != null)
             {
                 InvestmentNameTextBox = transaction.Name + " (" + transaction.Symbol + ")";
@@ -49,15 +56,25 @@ namespace MoneyPlanner.ViewModel.Portfolio
             }
             else _messageService.ShowError("Něco se nepovedlo, zkus to prosím znovu.");
         }
-        public void ConfirmInvestment()
+        public bool ConfirmInvestment()
         {
-            transactionToConfirm.Price = int.Parse(InvestmentPriceTextBox);
-            transactionToConfirm.Amount = int.Parse(InvestmentAmountTextBox);
-            transactionToConfirm.Volume = transactionToConfirm.Price * transactionToConfirm.Amount;
-            InvestmentVolumeTextBox = transactionToConfirm.Volume.ToString();
-            transactionToConfirm.Date = InvestmentDateTextBox.ToString();
-            transactionToConfirm.UserId = _user.Id;
-            transactionRepository.AddTransaction(transactionToConfirm);
+            try
+            {
+                transactionToConfirm.Price = int.Parse(InvestmentPriceTextBox);
+                transactionToConfirm.Amount = int.Parse(InvestmentAmountTextBox);
+                transactionToConfirm.Volume = transactionToConfirm.Price * transactionToConfirm.Amount;
+                InvestmentVolumeTextBox = transactionToConfirm.Volume.ToString();
+                transactionToConfirm.Date = InvestmentDateTextBox.ToString();
+                transactionToConfirm.UserId = user.Id;
+                if (_transactionRepository.AddTransaction(transactionToConfirm))
+                {
+                    return true;
+                } else return false;
+            } catch
+            {
+                _messageService.ShowError("Potvrď název CP a vyplň správně všechna pole.");
+                return false;
+            }
         }
         public string NameTextBlock
         {

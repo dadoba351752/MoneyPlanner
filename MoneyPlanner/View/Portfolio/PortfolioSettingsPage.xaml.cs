@@ -1,6 +1,4 @@
-﻿using MoneyPlanner.Service.DTO;
-using MoneyPlanner.Service.Navigation;
-using MoneyPlanner.Service.Settings;
+﻿using MoneyPlanner.Service.Interfaces;
 using MoneyPlanner.View.Helpers;
 using MoneyPlanner.ViewModel.Portfolio;
 using System;
@@ -11,35 +9,36 @@ namespace MoneyPlanner.View.Portfolio
 {
     public partial class PortfolioSettingsPage : UserControl
     {
-        private NavigationService _navigationService;
-        private UserDTO _user;
-        private readonly MessageService messageService = new MessageService();
-        CurrencySettings currencySettings = new CurrencySettings();
-        public PortfolioSettingsPage(NavigationService navigationService, UserDTO user)
+        private INavigationService _navigationService;
+        private readonly IMessageService _messageService;
+        private PortfolioSettingsViewModel _viewModel;
+        private ICurrencySettings _currencySettings;
+        public PortfolioSettingsPage(ICurrencySettings currencySettings, INavigationService navigationService, IMessageService messageService, PortfolioSettingsViewModel viewModel)
         {
             InitializeComponent();
-            var vm = new PortfolioSettingsViewModel();
-            DataContext = vm;
+            _viewModel = viewModel;
+            DataContext = _viewModel;
+            _currencySettings = currencySettings;
             _navigationService = navigationService;
-            _user = user;
+            _messageService = messageService;
         }
         //Kliknutím uloží nastavení
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            var vm = (PortfolioSettingsViewModel)this.DataContext;
             try
             {
-                currencySettings.SetCurrency(vm.SelectedCurrency);
-                messageService.ShowInformation("Uloženo.");
-            } catch(Exception ex)
+                _currencySettings.SetCurrency(_viewModel.SelectedCurrency);
+                _messageService.ShowInformation("Uloženo.");
+            }
+            catch (Exception ex)
             {
-                messageService.ShowError(ex.Message);
+                _messageService.ShowError(ex.Message);
             }
         }
         //Kliknutím přesměruje uživatele zpět na uživatelskou stránku
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
-            _navigationService.NavigateTo(new PortfolioUserPage(_navigationService, _user));
+            _navigationService.NavigateTo<PortfolioUserPage>();
         }
     }
 }

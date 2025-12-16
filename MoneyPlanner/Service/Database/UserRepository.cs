@@ -1,14 +1,19 @@
 ﻿using MoneyPlanner.Service.DTO;
+using MoneyPlanner.Service.Interfaces;
 using MoneyPlanner.View.Helpers;
 using System;
 using System.Windows;
 
 namespace MoneyPlanner.Service.Database
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
-        private static readonly UserDTO user = new UserDTO();
-        private static readonly MessageService messageService = new MessageService();
+        private IMessageService _messageService;
+
+        public UserRepository(IMessageService messageService)
+        {
+            _messageService = messageService;
+        }
         public void AddUser(string name, string surname, string birthNumber)
         {
             //Spojení s databází
@@ -28,10 +33,10 @@ namespace MoneyPlanner.Service.Database
                     try
                     {
                         command.ExecuteNonQuery();
-                        messageService.ShowConfirmation($"Uživatel {name} {surname} byl úspěšně přidán!");                    }
+                        _messageService.ShowInformation($"Uživatel {name} {surname} byl úspěšně přidán!");                    }
                     catch (Exception ex)
                     {
-                        messageService.ShowError(ex.Message);
+                        _messageService.ShowError(ex.Message);
                     }
                 }
             }
@@ -53,6 +58,7 @@ namespace MoneyPlanner.Service.Database
                 //Pokud existují nějaké záznamy ve výsledcích, vrátí daného uživatele, jinak vrátí null
                 if (reader.Read())
                 {
+                    UserDTO user = new UserDTO();
                     user.Id = Convert.ToInt32(reader["Id"]);
                     user.Name = reader["Name"] as string;
                     user.Surname = reader["Surname"] as string;

@@ -1,13 +1,14 @@
 ﻿using MoneyPlanner.Service.Database;
 using MoneyPlanner.Service.DTO;
 using MoneyPlanner.Service.Enum;
+using MoneyPlanner.Service.Interfaces;
 using MoneyPlanner.View.Helpers;
 using System;
 using System.Collections.Generic;
 
 namespace MoneyPlanner.Service.Settings
 {
-    public class CurrencySettings
+    public class CurrencySettings : ICurrencySettings
     {
         public CurrencySettings()
         {

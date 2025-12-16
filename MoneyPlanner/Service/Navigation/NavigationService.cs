@@ -1,15 +1,23 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MoneyPlanner.Service.Interfaces;
+using System;
 using System.Windows.Controls;
 
 namespace MoneyPlanner.Service.Navigation
 {
-    public class NavigationService
+    public class NavigationService : INavigationService
     {
-        public event Action<UserControl> NavigateRequested;
-
-        public void NavigateTo(UserControl userControl)
+        private IServiceProvider _provider;
+        public NavigationService(IServiceProvider provider)
         {
-            NavigateRequested?.Invoke(userControl);
+            _provider = provider;
+        }
+
+        public event Action<UserControl> NavigateRequested;
+        public void NavigateTo<TPage>() where TPage : UserControl
+        {
+            var page = _provider.GetRequiredService<TPage>();
+            NavigateRequested?.Invoke(page);
         }
     }
 }

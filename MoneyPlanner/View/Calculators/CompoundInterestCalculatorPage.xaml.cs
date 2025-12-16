@@ -6,17 +6,18 @@ namespace MoneyPlanner
 {
     public partial class CompoundInterestCalculatorPage : UserControl
     {
-        public CompoundInterestCalculatorPage()
+        private CompoundInterestCalculatorViewModel _viewModel;
+        public CompoundInterestCalculatorPage(CompoundInterestCalculatorViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = new CompoundInterestCalculatorViewModel();
+            DataContext = viewModel;
+            _viewModel = viewModel;
         }
 
         //Kliknutí spočítá výsledné hodnoty
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
-            var vm = (CompoundInterestCalculatorViewModel)this.DataContext;
-            vm.Calculate();
+            _viewModel.Calculate();
         }
     }
 }
