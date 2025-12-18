@@ -15,7 +15,7 @@ namespace MoneyPlanner.ViewModel.Portfolio
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        UserDTO _user = new UserDTO();
+        UserDTO _user;
         ITransactionRepository _transactionRepository;
         ICurrencySettings _currencySettings;
         private IAlphaVantageClient _apiClient;

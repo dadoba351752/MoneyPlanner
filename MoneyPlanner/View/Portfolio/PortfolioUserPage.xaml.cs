@@ -11,7 +11,7 @@ namespace MoneyPlanner.View.Portfolio
     public partial class PortfolioUserPage : UserControl
     {
         private INavigationService _navigationService;
-        private UserDTO _user = new UserDTO();
+        private UserDTO _user;
         private PortfolioUserViewModel _viewModel;
         public PortfolioUserPage(INavigationService navigationService, IUserContext userContext, PortfolioUserViewModel viewModel)
         {
