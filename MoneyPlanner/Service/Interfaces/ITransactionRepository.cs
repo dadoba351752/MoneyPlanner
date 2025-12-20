@@ -13,5 +13,6 @@ namespace MoneyPlanner.Service.Interfaces
         bool AddTransaction(TransactionDTO transaction);
         List<InvestmentSumDTO> GetInvestmentSum(int userId);
         ObservableCollection<TransactionDTO> GetTransactions(UserDTO user);
+        string GetInvestedMoney(int id);
     }
 }

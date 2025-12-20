@@ -7,6 +7,7 @@ using MoneyPlanner.Service.Interfaces;
 using MoneyPlanner.Service.Navigation;
 using MoneyPlanner.Service.Settings;
 using MoneyPlanner.View.Helpers;
+using MoneyPlanner.View.Home;
 using MoneyPlanner.View.Portfolio;
 using MoneyPlanner.ViewModel.Calculators;
 using MoneyPlanner.ViewModel.Portfolio;
@@ -37,6 +38,7 @@ namespace MoneyPlanner
         {
             //Page
             services.AddTransient<MainWindow>();
+            services.AddTransient<HomePage>();
             services.AddTransient<CompoundInterestCalculatorPage>();
             services.AddTransient<NetIncomeCalculatorPage>();
             services.AddTransient<PortfolioAddTransactionPage>();

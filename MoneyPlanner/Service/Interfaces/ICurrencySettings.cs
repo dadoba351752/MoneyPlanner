@@ -13,5 +13,10 @@ namespace MoneyPlanner.Service.Interfaces
         CurrenciesEnum GetCurrency();
         void SetCurrency(CurrenciesEnum currency);
         string CurrencyEnumToString(CurrenciesEnum currency);
+        CurrenciesEnum CurrencyStringToEnum(string currency);
+        List<CurrencySourceEnum> GetCurrencySourceList();
+        void SetCurrencySource(CurrencySourceEnum currencySource);
+        CurrencySourceEnum GetCurrencySource();
+        decimal? GetOfflineExchangeRate(string currencyFrom, string currencyTo);
     }
 }

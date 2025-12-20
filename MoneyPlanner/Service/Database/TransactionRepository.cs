@@ -108,5 +108,22 @@ namespace MoneyPlanner.Service.Database
                 return transactions;
             }
         }
+
+        public string GetInvestedMoney(int id)
+        {
+            using (var connection = DatabaseHelper.GetConnection())
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = @"SELECT SUM(Volume) FROM Transactions WHERE UserId = @UserId";
+                command.Parameters.AddWithValue("UserId", id);
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    var sum = reader.GetString(0);
+                    return sum;
+                }
+                return null;
+            }
+        }
     }
 }

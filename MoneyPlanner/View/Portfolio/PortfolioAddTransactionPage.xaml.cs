@@ -38,5 +38,9 @@ namespace MoneyPlanner.View.Portfolio
                 _navigationService.NavigateTo<PortfolioUserPage>();
             }
         }
+        private void GoBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            _navigationService.NavigateTo<PortfolioUserPage>();
+        }
     }
 }

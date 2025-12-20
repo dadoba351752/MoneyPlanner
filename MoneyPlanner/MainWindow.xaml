@@ -11,7 +11,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0" FontSize="15" Background="LightGray" Padding="5,5,0,5" BorderBrush="Black" BorderThickness="1">
+        <Menu Grid.Row="0" FontSize="15" Background="LightGray" Padding="5,5,0,5">
             <MenuItem Header="Domů" HorizontalAlignment="Right" Click="HomeButton_Click"/>
             <MenuItem Header="Kalkulačky">
                 <MenuItem x:Name="NetIncomeCalculatorMenuButton" Header="Čistá mzda" Click="NetIncomeCalculatorMenuButton_Click"/>

@@ -151,10 +151,12 @@
     <Compile Include="Service\Api\StockInfo.cs" />
     <Compile Include="Service\Context\UserContext.cs" />
     <Compile Include="Service\Database\TransactionRepository.cs" />
+    <Compile Include="Service\DTO\ExchangeRateDTO.cs" />
     <Compile Include="Service\DTO\InvestmentSumDTO.cs" />
     <Compile Include="Service\DTO\TransactionDTO.cs" />
     <Compile Include="Service\DTO\UserDTO.cs" />
     <Compile Include="Service\Enum\CurrenciesEnum.cs" />
+    <Compile Include="Service\Enum\CurrencySourceEnum.cs" />
     <Compile Include="Service\Interfaces\IAlphaVantageClient.cs" />
     <Compile Include="Service\Interfaces\ICurrencySettings.cs" />
     <Compile Include="Service\Interfaces\INavigationService.cs" />

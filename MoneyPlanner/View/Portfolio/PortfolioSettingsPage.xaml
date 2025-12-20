@@ -11,6 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400"></ColumnDefinition>
@@ -19,7 +20,9 @@
 
         <TextBlock Text="Výchozí měna:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left"></TextBlock>
         <ComboBox Height="20" Width="70" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" ItemsSource="{Binding CurrencyComboBox}" SelectedItem="{Binding SelectedCurrency}"></ComboBox>
-        <Button Click="SaveButton_Click" Content="Uložit" Width="50" Height="20" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"></Button>
-        <Button Click="GoBackButton_Click" Content="Zpět" Width="50" Height="20" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
+        <TextBlock Text="Zdroj měnových kurzů:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" ToolTip="Online = zdrojem měnových kurzů je API, Offline = měnové kurzy jsou nastaveny systémově natvrdo pro rychlejší práci (méně přesné)"></TextBlock>
+        <ComboBox Height="20" Width="70" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" ItemsSource="{Binding CurrencySourceComboBox}" SelectedItem="{Binding SelectedCurrencySource}"></ComboBox>
+        <Button Click="SaveButton_Click" Content="Uložit" Width="50" Height="20" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right"></Button>
+        <Button Click="GoBackButton_Click" Content="Zpět" Width="50" Height="20" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
     </Grid>
 </UserControl>

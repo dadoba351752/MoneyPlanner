@@ -28,6 +28,7 @@ namespace MoneyPlanner.View.Portfolio
             try
             {
                 _currencySettings.SetCurrency(_viewModel.SelectedCurrency);
+                _currencySettings.SetCurrencySource(_viewModel.SelectedCurrencySource);
                 _messageService.ShowInformation("Uloženo.");
             }
             catch (Exception ex)
